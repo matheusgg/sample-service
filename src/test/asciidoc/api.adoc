@@ -1,0 +1,13 @@
+= Sample Service
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+[[introduction]]
+== Introduction
+Auto Rest Docs With Gradle Kotlin DSL Sample.
+
+[[resources]]

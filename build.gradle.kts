@@ -179,7 +179,7 @@ afterEvaluate {
                     limit {
                         counter = "INSTRUCTION"
                         value = "COVEREDRATIO"
-                        minimum = valueOf(0.5)
+                        minimum = valueOf(0.1)
                     }
                 }
             }

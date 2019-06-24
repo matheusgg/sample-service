@@ -1,2 +1,22 @@
 info:
   documentationHost: '${project.documentationHost}'
+
+feign:
+  hystrix.enabled: true
+  client:
+    config:
+      default:
+        loggerLevel: full
+
+hystrix:
+  command:
+    default.execution.isolation.thread.timeoutInMilliseconds: 15000
+
+logging:
+  level:
+    feign.Logger: trace
+
+sample-service:
+  integration:
+    notification-client:
+      url: 'www.google.com.br'

@@ -31,6 +31,8 @@ val kotlinLoggingVersion = "1.6.22"
 val springAutoRestDocsVersion = "2.0.3"
 val springRestDocsVersion = "2.0.3.RELEASE"
 val mapStructVersion = "1.3.0.Final"
+val springCloudVersion = "Greenwich.SR1"
+val feignHttpClientVersion = "10.2.0"
 
 repositories {
     mavenCentral()
@@ -40,11 +42,13 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-undertow")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.mapstruct:mapstruct:$mapStructVersion")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("io.github.microutils:kotlin-logging:$kotlinLoggingVersion")
+    implementation("io.github.openfeign:feign-httpclient:${feignHttpClientVersion}")
     runtimeOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     kapt("org.mapstruct:mapstruct-processor:$mapStructVersion")
@@ -52,6 +56,12 @@ dependencies {
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc:$springRestDocsVersion")
     testImplementation("capital.scalable:spring-auto-restdocs-core:$springAutoRestDocsVersion")
     testImplementation("capital.scalable:spring-auto-restdocs-json-doclet-jdk9:$springAutoRestDocsVersion")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
+    }
 }
 
 kapt {

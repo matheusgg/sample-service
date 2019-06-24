@@ -7,7 +7,7 @@ plugins {
     kotlin("kapt") version "1.3.31"
     kotlin("plugin.noarg") version "1.3.31"
     kotlin("plugin.spring") version "1.3.31"
-    id("org.jetbrains.dokka") version "0.9.16"
+    id("org.jetbrains.dokka") version "0.9.18"
     id("org.asciidoctor.convert") version "2.2.0"
     id("org.springframework.boot") version "2.1.5.RELEASE"
     id("com.gorylenko.gradle-git-properties") version "2.0.0"
@@ -28,7 +28,7 @@ configurations {
 }
 
 val kotlinLoggingVersion = "1.6.22"
-val springAutoRestDocsVersion = "2.0.3"
+val springAutoRestDocsVersion = "2.0.5"
 val springRestDocsVersion = "2.0.3.RELEASE"
 val mapStructVersion = "1.3.0.Final"
 val springCloudVersion = "Greenwich.SR1"
@@ -110,6 +110,8 @@ val javadocJsonDir = file("$buildDir/generated-javadoc-json")
 
 tasks {
     dokka {
+        noJdkLink = true
+        noStdlibLink = true
         includeNonPublic = true
         outputFormat = "auto-restdocs-json"
         outputDirectory = javadocJsonDir.absolutePath
@@ -187,7 +189,7 @@ afterEvaluate {
                     limit {
                         counter = "INSTRUCTION"
                         value = "COVEREDRATIO"
-                        minimum = valueOf(0.5)
+                        minimum = valueOf(0.1)
                     }
                 }
             }

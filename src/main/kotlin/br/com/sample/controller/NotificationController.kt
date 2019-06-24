@@ -1,6 +1,7 @@
 package br.com.sample.controller
 
 import br.com.sample.client.NotificationClient
+import br.com.sample.model.NotificationProcessResponse
 import br.com.sample.model.NotificationRequest
 import br.com.sample.model.Push
 import mu.KLogger
@@ -15,19 +16,19 @@ import org.springframework.web.bind.annotation.RestController
 class NotificationController(private val log: KLogger = logger { }, private val client: NotificationClient) {
 
     @PostMapping
-    fun send(@RequestBody request: NotificationRequest) {
+    fun send(@RequestBody request: NotificationRequest): NotificationProcessResponse {
+        val usersWithError = mutableListOf<Long>()
         request.push?.users!!.chunked(100)
             .parallelStream()
-            .forEach {
+            .forEach { users ->
                 runCatching {
-                    val req = request.copy(push = Push(it))
+                    val req = request.copy(push = Push(users))
                     val response = this.client.create(req)
                     this.client.send(response.uuid)
-                }.onSuccess {
-                    log.info("==================> Success")
                 }.onFailure {
-                    log.error("==================> Error {}", it)
+                    usersWithError.addAll(users)
                 }
             }
+        return NotificationProcessResponse(usersWithError)
     }
 }
